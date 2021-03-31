@@ -27,7 +27,7 @@ You need to generate an app key for your snipe-it instance. run the below comman
 ```shell
 docker run --rm snipe/snipe-it
 ```
-#### .env
+#### Environment Variables
 Edit the `.env` file and enter in you secrets and instance specific information. Such as your `APP_KEY`
 
 
@@ -80,11 +80,10 @@ The Server block is what you would primarily edit/duplicate when modifying the c
 		listen 443 ssl;
         # DNS Address required for this server block to match
         # You can add multiple entries seperated by a space
-        #
 		server_name my_assets.contoso.local;
 
         # SSL Certificates to present to clients
-        # Make these using the commands under certificates folder
+        # Make these using the commands under certificates folder under my_assets
 		ssl_certificate /etc/ssl/certs/my_assets.contoso.local.crt;
 		ssl_certificate_key /etc/ssl/private/my_assets.contoso.local.key;
 
@@ -123,10 +122,10 @@ The **daily backups** keep a default `MAX_BACKUPS` of `56`.
  * This will kick off a backup task when executed.
 
 The **Monthly backups** keep a default `MAX_BACKUPS` of `12`.\
- * This Grabs the latest backup within the container and sticks it the the desired folder.
+ * This Grabs the latest backup within the container and sticks it the the specified folder.
 
 The **Yearly backups** keep a default `MAX_BACKUPS` of `100`.\
- * This Grabs the latest backup within the container and sticks it the the    desired folder.
+ * This Grabs the latest backup within the container and sticks it the the    specified folder.
 These can all be adjusted to suit your environment.
 
 _Snipe-IT's scheduler by default will run an auto backup weekly._
