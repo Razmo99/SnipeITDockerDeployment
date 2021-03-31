@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  proxy:
+    image: nginx:stable
+    restart: unless-stopped
+    network_mode: host
+    env_file:
+      - ./.env
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+      - type: bind
+        source: ./ssl
+        target: /etc/ssl
