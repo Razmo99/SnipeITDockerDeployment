@@ -1,0 +1,4 @@
+0 10 * * * bash /home/dockercaptain/snipe_backups_daily.sh snipeit_container_name # Backup 10am
+0 14 * * * bash /home/dockercaptain/snipe_backups_daily.sh snipeit_container_name # Backup pm
+0 0 1 * * bash /home/dockercaptain/snipe_backups_monthy.sh snipeit_container_name ...Path.../my_assets/backups/monthly/ # Backup monthly
+0 0 1 1 * bash /home/dockercaptain/snipe_backups_yearly.sh snipeit_container_name ...Path.../my_assets/backups/yearly/ # Backup yearly

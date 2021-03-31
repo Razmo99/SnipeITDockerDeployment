@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+
+  mariadb:
+    image: mariadb:latest
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    expose:
+      - 3306
+    volumes:
+      - mariadb:/var/lib/mysql
+
+  snipeit:
+    image: snipe/snipe-it:latest
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - 8080:80
+    depends_on:
+      - mariadb
+    volumes:
+      - snipeit-uploads:/var/lib/snipeit
+      - snipeit-backups:/var/www/html/storage/app/backups
+      - type: bind
+        source: ./apache2
+        target: /var/log/apache2
+
+volumes:
+  mariadb:
+    driver: local
+  snipeit-uploads:
+    driver: local
+  snipeit-backups:
+    driver: local     

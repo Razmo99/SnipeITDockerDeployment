@@ -1,0 +1,8 @@
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = my_assets.contoso.local
+DNS.2 = www.my_assets.contoso.local

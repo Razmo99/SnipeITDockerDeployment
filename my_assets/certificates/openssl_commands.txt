@@ -1,0 +1,2 @@
+openssl req -new -sha256 -nodes -out my_assets.contoso.local.csr -newkey rsa:2048 -keyout my_assets.contoso.local.key -config <( cat csr_details.txt )
+openssl x509 -req -days 365 -in my_assets.contoso.local.csr -signkey my_assets.contoso.local.key -out my_assets.contoso.local.crt -sha256 -extfile extra_params.txt
