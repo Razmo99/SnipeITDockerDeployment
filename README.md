@@ -126,9 +126,8 @@ The **Monthly backups** keep a default `MAX_BACKUPS` of `12`.\
 
 The **Yearly backups** keep a default `MAX_BACKUPS` of `100`.\
  * This Grabs the latest backup within the container and sticks it the the    specified folder.
-These can all be adjusted to suit your environment.
 
-_Snipe-IT's scheduler by default will run an auto backup weekly._
+_The above can all be adjusted to suit your environment. Snipe-IT's scheduler by default will run an auto backup weekly._
 
 ### Snipe-IT Backup Restore
 
