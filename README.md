@@ -18,18 +18,26 @@ Copy this repo into a directory on the Linux OS.
 Rename `my_assets` folder to a desired name IE `NSW-Service`\
 _final domain name being `nsw-service.assets.contoso.local` or the like._
 
-Edit the `docker-compose.yml` and change the port for the `snipe` service to a desired number. _Each instance must have a unique port._
-
 #### App Key
-
 You need to generate an app key for your snipe-it instance. run the below command it should return an app key for you to use.
 
 ```shell
 docker run --rm snipe/snipe-it
 ```
+_You need a unique app key for each snipe-it instance you create._
+
+#### Docker Network
+A Docker network needs to be made for all the containers to use.
+```shell
+docker network create reverse_proxy
+```
+_You can chang the name but, it needs to be reflected in the compose files for the `nginx` proxy and `snipe-it app`_
+
+General network Traffic flow is like below.\
+user <--> nginx <--> Snipe-it --> MariaDB
+
 #### Environment Variables
 Edit the `.env` file and enter in you secrets and instance specific information. Such as your `APP_KEY`
-
 
 #### SSL Certificates
 
@@ -69,8 +77,22 @@ docker-compose down --volumes --remove-orphans
 ### Nginx Setup
 
 _The default config assumes you are using SSL for the reverse proxy._
-
+#### SSL
 Any certificates that will be references in the config will need to be placed under the `ssl` folder which is bound to `/etc/ssl` within the Nginx container. copy any `.keys` under `private` and any `.crt` under `certs`
+#### Container Name
+Each server block needs to point to the internal containers name. Use the below command to list all containers on the host.
+```shell
+docker ps
+```
+
+Copy the name of the desired container and update the below sections in the server block
+
+```nginx
+set $my_assets_server my_assets_snipeit_1;
+
+proxy_pass http://$my_assets_server;
+```
+
 
 The Server block is what you would primarily edit/duplicate when modifying the config. Tweak the server block as needed.
 
@@ -81,6 +103,9 @@ The Server block is what you would primarily edit/duplicate when modifying the c
         # DNS Address required for this server block to match
         # You can add multiple entries seperated by a space
 		server_name my_assets.contoso.local;
+
+		#Set a variable pointing to the name of the docker container to resolve.
+		set $my_assets_server my_assets_snipeit_1;		
 
         # SSL Certificates to present to clients
         # Make these using the commands under certificates folder under my_assets
@@ -95,7 +120,7 @@ The Server block is what you would primarily edit/duplicate when modifying the c
             # This is the address to forward clients to
             # It should be the IP & Port of the Snipe-IT Instance.
             # You can find the port in the docker-compose.yml for the instance in question.
-			proxy_pass http://127.0.0.1:8080;
+			proxy_pass http://$my_assets_server;
 		}
 	}	
 ~~~

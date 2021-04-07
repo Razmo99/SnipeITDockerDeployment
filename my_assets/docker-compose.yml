@@ -5,6 +5,8 @@ services:
   mariadb:
     image: mariadb:latest
     restart: unless-stopped
+    networks:
+      - db
     env_file:
       - ./.env
     expose:
@@ -15,10 +17,13 @@ services:
   snipeit:
     image: snipe/snipe-it:latest
     restart: unless-stopped
+    networks:
+      - db
+      - default    
     env_file:
       - ./.env
-    ports:
-      - 8080:80
+    expose:
+      - 80
     depends_on:
       - mariadb
     volumes:
@@ -34,4 +39,10 @@ volumes:
   snipeit-uploads:
     driver: local
   snipeit-backups:
-    driver: local     
+    driver: local
+
+networks:
+  default:
+    external:
+      name: reverse_proxy
+  db:    

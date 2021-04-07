@@ -5,7 +5,8 @@ services:
   proxy:
     image: nginx:stable
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - 443:443
     env_file:
       - ./.env
     volumes:
@@ -15,3 +16,8 @@ services:
       - type: bind
         source: ./ssl
         target: /etc/ssl
+
+networks:
+  default:
+    external:
+      name: reverse_proxy
