@@ -37,7 +37,7 @@ General network Traffic flow is like below.\
 user <--> nginx <--> Snipe-it --> MariaDB
 
 #### Environment Variables
-Edit the `.env` file and enter in you secrets and instance specific information. Such as your `APP_KEY`
+Edit the `.env` file and enter in your secrets and instance specific information. Such as your `APP_KEY`
 
 #### SSL Certificates
 
@@ -136,7 +136,7 @@ Below is just an example that could be used for one Snipe-IT instance.
 ```c
 # From Crontab.txt #
 0 10 * * * bash /home/dockercaptain/snipe_backups_daily.sh snipeit_container_name # Backup 10am
-0 14 * * * bash /home/dockercaptain/snipe_backups_daily.sh snipeit_container_name # Backup pm
+0 14 * * * bash /home/dockercaptain/snipe_backups_daily.sh snipeit_container_name # Backup 10pm
 0 0 1 * * bash /home/dockercaptain/snipe_backups_monthy.sh snipeit_container_name ...Path.../my_assets/backups/monthly/ # Backup monthly
 0 0 1 1 * bash /home/dockercaptain/snipe_backups_yearly.sh snipeit_container_name ...Path.../my_assets/backups/yearly/ # Backup yearly
 
